@@ -1,0 +1,37 @@
+{% extends  'main/baser.html' %}
+
+{%block title%} Create an account  {%endblock%}
+
+{% block content %}
+<a style="font-weight:700;">Register here</a>
+<form method = 'post' class='form-group'>
+    {% csrf_token %}
+{{form}}
+<button type="submit" class = 'btn btn-success'> Register here </button>
+</form>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,56 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<h1>Trading Records</h1>
+
+<p>Applications sorted by most recent Daisy fair date (newest first)</p>
+
+<table border="1" class="table trading-table">
+    <tr>
+        <th>User</th>
+        <th>Business Name</th>
+        <th>MRD Fair (Date)</th>
+        <th>Product Description</th>
+        <th>Category</th>
+        <th>Where Else Sold</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for record in trading_records %}
+    <tr {% if record.status %}
+           {% if record.status.accepted %}
+             class="table-success"
+           {% elif record.status.denied %}
+             class="table-danger"
+           {% endif %}
+         {% endif %}
+    >
+        <td>{{ record.user_id }}</td>
+        <td>{{ record.buisname }}</td>
+        <td>{{ record.MRDfair }}</td>
+        <td>{{ record.productdesc }}</td>
+        <td>{{ record.category }}</td>
+        <td>{{ record.wherelsesold }}</td>
+        <td>
+            <form action="{% url 'trading' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ record.user_id }}">
+                <input type="hidden" name="action" value="accepttrading">
+                <button type="submit" class="btn btn-success btn-sm">Accept</button>
+            </form>
+            <form action="{% url 'trading' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ record.user_id }}">
+                <input type="hidden" name="action" value="denytrading">
+                <button type="submit" class="btn btn-danger btn-sm">Deny</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+    {% empty %}
+    <tr>
+        <td colspan="7">No trading records found.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

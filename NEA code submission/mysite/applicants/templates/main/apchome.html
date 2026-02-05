@@ -1,0 +1,48 @@
+{%extends  'main/abase.html' %}
+
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+       <p>Many greetings {{ request.user.username }}</p>
+
+       {% if status %}
+        {% if status_sub %}
+            <p>You have completed your application.</p>
+        {% endif %}
+       {% else %}
+            <p>You have not completed your application.</p>
+            <p>Please take your time submitting this form as you will give alot of information about your buisness</p>
+            <p>If you need to please draft responses in another page before pasting them into the form</p>
+       {% endif %}
+
+
+    <p>You will get an email to notify you on the status of your application in 2-4 working weeks</p>
+    <p> other updates will be displayed here  </p>
+    {% else %}
+        <a href="{% url 'register:sign' %}">Click here to Login</a>
+    {% endif %}
+
+    <h2>Updates from Daisy Trust</h2>
+    
+    <table border="1" class="table updates-table">
+        <thead>
+            <tr>
+                <th>Update Information</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in Display_Updates %}
+            <tr>
+                <td>{{ record.infoup }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No updates posted yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+
+ 
