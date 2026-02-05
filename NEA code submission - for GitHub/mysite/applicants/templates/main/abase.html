@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Applicant Side</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
+    <style type='text/css'>
+        .sidenav {
+            height: 100%;
+            width: 220px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #5AA49B;
+            overflow-x: hidden;
+            padding: 20px 16px;
+        }
+        .sidenav a {
+            padding: 10px 16px;
+            text-decoration: none;
+            font-size: 16px;
+            color: #0e076f;
+            display: block;
+            border-radius: .375rem;
+        }
+        .sidenav a:hover {
+            color: #ffffff;
+            background-color: rgba(255,255,255,0.15);
+        }
+        .main {
+            margin-left: 220px;
+            padding: 24px;
+        }
+    </style>
+</head>
+<body>
+
+<div class='sidenav d-flex flex-column align-items-start gap-2'>
+    <img src="/static/images/daisylogo2.png" alt="Logo" width="140" class="mb-2 rounded shadow-sm">
+    <nav class="nav nav-pills flex-column w-100">
+        <a class="nav-link text-start" href='/apc/apchome'>Home</a>
+        <a class="nav-link text-start" href='/apc/form/'>Submit form</a>
+        <div class="border-top my-2"></div>
+        <a class="nav-link text-start" href='/apc/gone/'>Logout</a>
+    </nav>
+</div>
+
+<div class='main'>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10 col-xl-8">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <img src="/static/images/daisylogo2.png" alt="Logo" width="56" class="rounded shadow-sm">
+                    <h1 class="h4 mb-0">Daisy application centre</h1>
+                </div>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        {% block content %}
+                        This is base.html for applicants.
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+
+</body>
+</html>

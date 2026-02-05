@@ -1,0 +1,61 @@
+{%extends  'main/base.html' %}
+{% block content %}
+<h1>Welcome to the Daisy Trust home page</h1>
+{% if request.user.is_authenticated %}
+       <p>Hello {{ request.user.username }} if this is your first time please read the instructions below about usage </p>
+{%endif%}
+<p>There are 3 buttons </p>
+<p>  Accept: Allows into fair and enables email updates </p>
+    <p> Deny : Rules out application for the year and gives ability for correspondence </p>
+    <p> Comment : here you can leave notes about different applications 
+</p>
+<p> Please navigate through the different tables which are ordered with best applications at the top for your ease  
+</p>
+<p> The green and red highlighting denotes wether an application has been accepted or
+     denied and no highlighting means a decision has yet to be made on it
+</p>
+<form method='post' action='/admins/home/'>
+    {% csrf_token %}
+    <legend>Give Updates to Applicants</legend>
+    {{ Update_form.as_p }}
+    </fieldset>
+    <button type="submit" name="save">Submit here</button>
+</form>
+
+<div class="container my-4">
+  <h4 class="text-center mb-4">Status Summary</h4>
+  <div class="row g-3 justify-content-center text-center">
+
+    <div class="col-6 col-sm-4 col-md-2">
+      <div class="bg-light border shadow-sm rounded-2 py-2">
+        <h6>Total</h6>
+        <p class="fs-4 mb-0">{{ total_count }}</p>
+      </div>
+    </div>
+
+    <div class="col-6 col-sm-4 col-md-2">
+      <div class="bg-light border shadow-sm rounded-2 py-2">
+        <h6>Unreviewed</h6>
+        <p class="fs-4 mb-0">{{ unreviewed_count }}</p>
+      </div>
+    </div>
+
+    <div class="col-6 col-sm-4 col-md-2">
+      <div class="bg-light border shadow-sm rounded-2 py-2">
+        <h6>Accepted</h6>
+        <p class="fs-4 mb-0">{{ accepted_count }}</p>
+      </div>
+    </div>
+
+    <div class="col-6 col-sm-4 col-md-2">
+      <div class="bg-light border shadow-sm rounded-2 py-2">
+        <h6>Denied</h6>
+        <p class="fs-4 mb-0">{{ denied_count }}</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+{% endblock %}

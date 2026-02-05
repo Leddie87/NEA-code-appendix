@@ -1,0 +1,57 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<h1>Denied applications</h1>
+
+<p>Cancel returns Applicant to unreviewed status </p>
+
+<table border="1" class="table table-striped">
+    <tr>
+        <th>User ID</th>
+        <th>Business Name</th>
+        <th>Stallholder Name</th>
+        <th>Reason</th>
+        <th>Actions</th>
+        <th>Edit comment below</th>
+    
+
+    </tr>
+
+    {% for entry in Display_User %}
+    <tr>
+        <td>{{ entry.user_id }}</td>
+        <td>{{ entry.buisname }}</td>
+        <td>{{ entry.stallholdername }}</td>
+        <td>{{ entry.comments }}</td>
+        <td>
+            <form action="{% url 'email' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ entry.user_id }}">
+                <input type="hidden" name="recipient_email" value="{{ entry.email }}">
+                <input type="hidden" name="stallholder_name" value="{{ entry.stallholdername }}">
+                <input type="hidden" name="action" value="send_email">
+                <button type="submit" class="btn btn-success btn-sm">Send email</button>
+            </form>
+            <form action="{% url 'denied' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ entry.user_id }}">
+                <input type="hidden" name="action" value="undo">
+                <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+            </form>
+            <td>
+                <form action="{% url 'denied' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{ entry.user_id }}">
+                    <input type="hidden" name="action" value="comment">
+                    <input type="text" name="comment_text" placeholder="Enter comment" class="form-control form-control-sm d-inline-block" style="width: 200px;">
+                    <button type="submit" class="btn btn-warning btn-sm">Comment</button>
+                </form>
+            </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">No user records found.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

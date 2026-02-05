@@ -1,0 +1,56 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<h1>Media & Marketing Records</h1>
+
+<p>Applications sorted by follower count (highest first)</p>
+
+<table border="1" class="table med-mark-table">
+    <tr>
+        <th>User</th>
+        <th>Business Name</th>
+        <th>Web Link</th>
+        <th>Social Media Links</th>
+        <th>Followers</th>
+        <th>Marketing Plan</th>
+        <th>Actions</th>
+    </tr>
+    <tbody>
+    {% for record in socialmedia_records %}
+    <tr {% if record.status %}
+           {% if record.status.accepted %}
+             class="table-success"
+           {% elif record.status.denied %}
+             class="table-danger"
+           {% endif %}
+         {% endif %}
+    >
+        <td>{{ record.user_id }}</td>
+        <td>{{ record.buisname }}</td>
+        <td>{{ record.weblink }}</td>
+        <td>{{ record.somedialinks }}</td>
+        <td>{{ record.followers }}</td>
+        <td>{{ record.marketingplan }}</td>
+        <td>
+            <form action="{% url 'med_mark' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ record.user_id }}">
+                <input type="hidden" name="action" value="acceptm">
+                <button type="submit" class="btn btn-success btn-sm">Accept</button>
+            </form>
+            <form action="{% url 'med_mark' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ record.user_id }}">
+                <input type="hidden" name="action" value="denym">
+                <button type="submit" class="btn btn-danger btn-sm">Deny</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+    {% empty %}
+    <tr>
+        <td colspan="7">No social media records found.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

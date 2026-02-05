@@ -1,0 +1,58 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<h1>General Info Records</h1>
+
+<p>Applications sorted by highest userid and therefore most recent application </p>
+
+<table border="1" class="table apcinfo-table">
+    <tr>
+        <th>User ID</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Phone Number</th>
+        <th>Terms Accepted</th>
+        <th>Referral Source</th>
+        <th>AOB</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for record in generalinfo_records %}
+    <tr {% if record.status %}
+           {% if record.status.accepted %}
+             class="table-success"
+           {% elif record.status.denied %}
+             class="table-danger"
+           {% endif %}
+         {% endif %}
+    >
+        <td>{{ record.user_id }}</td>
+        <td>{{ record.email }}</td>
+        <td>{{ record.adress }}</td>
+        <td>{{ record.phonenumber }}</td>
+        <td>{{ record.tsandcs }}</td>
+        <td>{{ record.referral_source }}</td>
+        <td>{{ record.AOB }}</td>
+        <td>
+            <form action="{% url 'apcinfo' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ record.user_id }}">
+                <input type="hidden" name="action" value="acceptinfo">
+                <button type="submit" class="btn btn-success btn-sm">Accept</button>
+            </form>
+            <form action="{% url 'apcinfo' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ record.user_id }}">
+                <input type="hidden" name="action" value="denyinfo">
+                <button type="submit" class="btn btn-danger btn-sm">Deny</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+    {% empty %}
+    <tr>
+        <td colspan="8">No general info records found.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
